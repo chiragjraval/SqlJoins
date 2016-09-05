@@ -1,4 +1,4 @@
-package com.chirag.js.exceptions;
+package com.chirag.sj.exceptions;
 
 public class JoinMethodNotFoundException extends Exception
 {

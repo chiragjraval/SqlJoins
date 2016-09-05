@@ -3,8 +3,8 @@ package com.chirag.sj.implementation;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
-import com.chirag.js.exceptions.JoinMethodNotFoundException;
-import com.chirag.js.exceptions.JoinMethodNotMatchingException;
+import com.chirag.sj.exceptions.JoinMethodNotFoundException;
+import com.chirag.sj.exceptions.JoinMethodNotMatchingException;
 import com.chirag.sj.interfaces.JoinableList;
 import com.chirag.sj.interfaces.Selector;
 

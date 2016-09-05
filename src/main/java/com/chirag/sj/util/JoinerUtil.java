@@ -4,9 +4,9 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.List;
 
-import com.chirag.js.exceptions.JoinMethodNotFoundException;
-import com.chirag.js.exceptions.JoinMethodNotMatchingException;
 import com.chirag.sj.annotations.JoinMethod;
+import com.chirag.sj.exceptions.JoinMethodNotFoundException;
+import com.chirag.sj.exceptions.JoinMethodNotMatchingException;
 import com.chirag.sj.implementation.BasicInnerJoiner;
 import com.chirag.sj.implementation.BasicLeftOuterJoiner;
 import com.chirag.sj.interfaces.Selector;

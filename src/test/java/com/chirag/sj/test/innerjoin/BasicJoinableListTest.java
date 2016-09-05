@@ -7,8 +7,8 @@ import java.util.List;
 import org.junit.Assert;
 import org.junit.Test;
 
-import com.chirag.js.exceptions.JoinMethodNotFoundException;
-import com.chirag.js.exceptions.JoinMethodNotMatchingException;
+import com.chirag.sj.exceptions.JoinMethodNotFoundException;
+import com.chirag.sj.exceptions.JoinMethodNotMatchingException;
 import com.chirag.sj.implementation.BasicJoinableList;
 import com.chirag.sj.interfaces.JoinableList;
 import com.chirag.sj.test.model.Department;

@@ -6,8 +6,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import com.chirag.js.exceptions.JoinMethodNotFoundException;
-import com.chirag.js.exceptions.JoinMethodNotMatchingException;
+import com.chirag.sj.exceptions.JoinMethodNotFoundException;
+import com.chirag.sj.exceptions.JoinMethodNotMatchingException;
 import com.chirag.sj.interfaces.Joiner;
 import com.chirag.sj.interfaces.Selector;
 import com.chirag.sj.util.JoinerUtil;
