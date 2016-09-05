@@ -4,7 +4,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.List;
 
 import com.chirag.sj.exceptions.JoinMethodNotFoundException;
@@ -12,8 +11,8 @@ import com.chirag.sj.exceptions.JoinMethodNotMatchingException;
 import com.chirag.sj.interfaces.Joiner;
 import com.chirag.sj.interfaces.Selector;
 import com.chirag.sj.util.JoinerUtil;
-import com.google.common.collect.Multimap;
 import com.google.common.collect.HashMultimap;
+import com.google.common.collect.Multimap;
 
 public class BasicLeftOuterJoiner implements Joiner
 {
