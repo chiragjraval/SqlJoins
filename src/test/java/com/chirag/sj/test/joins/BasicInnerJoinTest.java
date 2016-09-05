@@ -1,4 +1,4 @@
-package com.chirag.sj.test.innerjoin;
+package com.chirag.sj.test.joins;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
