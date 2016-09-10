@@ -22,7 +22,7 @@ import com.chirag.sj.test.selector.EmployeeLoginDetailSelector;
 public class BasicJoinableListTest
 {
 	@Test
-	public void test1() throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, JoinMethodNotFoundException, JoinMethodNotMatchingException
+	public void innerJoinTest1() throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, JoinMethodNotFoundException, JoinMethodNotMatchingException
 	{
 		List<Employee> employees = new ArrayList<Employee>();
 		employees.add(new Employee("ld01", "chirag", "ad1", "dp01", 1));
@@ -43,7 +43,7 @@ public class BasicJoinableListTest
 	}
 	
 	@Test
-	public void test2() throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, JoinMethodNotFoundException, JoinMethodNotMatchingException
+	public void multipleJoinTest1() throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, JoinMethodNotFoundException, JoinMethodNotMatchingException
 	{
 		List<Employee> employees = new ArrayList<Employee>();
 		employees.add(new Employee("ld01", "chirag", "ad1", "dp01", 1));

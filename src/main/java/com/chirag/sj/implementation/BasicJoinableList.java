@@ -12,6 +12,8 @@ public class BasicJoinableList<E> implements JoinableList<E>
 {
 	private static final BasicInnerJoiner innerJoiner = new BasicInnerJoiner();
 	private static final BasicLeftOuterJoiner leftOuterJoiner = new BasicLeftOuterJoiner();
+	private static final BasicRightOuterJoiner rightOuterJoiner = new BasicRightOuterJoiner();
+	private static final BasicFullOuterJoiner fullOuterJoiner = new BasicFullOuterJoiner();
 	
 	private List<E> data = null;
 	
@@ -35,6 +37,20 @@ public class BasicJoinableList<E> implements JoinableList<E>
 	public <V, T> JoinableList<T> leftOuterJoin(JoinableList<V> joinList, Selector<E, V, T> selector) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, JoinMethodNotFoundException, JoinMethodNotMatchingException
 	{
 		List<T> result = leftOuterJoiner.join(this.data, joinList.getData(), selector);
+		return new BasicJoinableList<T>(result);
+	}
+
+	@Override
+	public <V, T> JoinableList<T> rightOuterJoin(JoinableList<V> joinList, Selector<E, V, T> selector) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, JoinMethodNotFoundException, JoinMethodNotMatchingException
+	{
+		List<T> result = rightOuterJoiner.join(this.data, joinList.getData(), selector);
+		return new BasicJoinableList<T>(result);
+	}
+
+	@Override
+	public <V, T> JoinableList<T> fullOuterJoin(JoinableList<V> joinList, Selector<E, V, T> selector) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, JoinMethodNotFoundException, JoinMethodNotMatchingException
+	{
+		List<T> result = fullOuterJoiner.join(this.data, joinList.getData(), selector);
 		return new BasicJoinableList<T>(result);
 	}
 }

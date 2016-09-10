@@ -3,7 +3,7 @@ package com.chirag.sj.implementation;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Collection;
 import java.util.List;
 
 import com.chirag.sj.exceptions.JoinMethodNotFoundException;
@@ -11,6 +11,8 @@ import com.chirag.sj.exceptions.JoinMethodNotMatchingException;
 import com.chirag.sj.interfaces.Joiner;
 import com.chirag.sj.interfaces.Selector;
 import com.chirag.sj.util.JoinerUtil;
+import com.google.common.collect.HashMultimap;
+import com.google.common.collect.Multimap;
 
 public class BasicInnerJoiner implements Joiner
 {
@@ -34,20 +36,22 @@ public class BasicInnerJoiner implements Joiner
 		if(!c1JoinMethod.getReturnType().equals(c2JoinMethod.getReturnType()))
 			throw new JoinMethodNotMatchingException(class1, class2);
 		
-		HashMap<Object, V> list2Map = new HashMap<Object, V>();
-		for (V list2Obj : list2) list2Map.put(c2JoinMethod.invoke(list2Obj), list2Obj);
+		List<T> result = new ArrayList<T>(list1.size());
+		Multimap<Object, V> list2Map = HashMultimap.create();
 		
-		List<T> result = new ArrayList<T>(list1.size()<list2.size() ? list1.size() : list2.size());
+		for (V list2Obj : list2) {
+			Object key = c2JoinMethod.invoke(list2Obj);
+			if(key != null){
+				list2Map.put(c2JoinMethod.invoke(list2Obj), list2Obj);
+			}
+		}
 		
 		for (E list1Obj : list1)
 		{
 			Object list1ObjKey = c1JoinMethod.invoke(list1Obj);
-			
-			if(list2Map.containsKey(list1ObjKey))
-			{
-				V list2Obj = list2Map.get(list1ObjKey);
-				result.add(selector.select(list1Obj, list2Obj));
-			}
+			Collection<V> list2Obj = list2Map.get(list1ObjKey);
+			if(list2Obj == null || list2Obj.isEmpty()) result.add(selector.select(list1Obj, null));
+			else for(V v:list2Obj) result.add(selector.select(list1Obj, v));
 		}
 		
 		return result;
