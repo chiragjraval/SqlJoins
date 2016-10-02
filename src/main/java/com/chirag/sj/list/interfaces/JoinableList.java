@@ -1,4 +1,4 @@
-package com.chirag.sj.interfaces;
+package com.chirag.sj.list.interfaces;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
@@ -6,13 +6,8 @@ import java.util.List;
 import com.chirag.sj.exceptions.JoinMethodNotFoundException;
 import com.chirag.sj.exceptions.JoinMethodNotMatchingException;
 
-public interface JoinableList<E>
-{
-	/**
-	 * @return Data setup into Joinable List
-	 */
-	public List<E> getData();
-	
+public interface JoinableList<E> extends List<E>
+{	
 	/**
 	 * This method is used to perform Inner Join with other List 
 	 * @param joinList List to join of type V

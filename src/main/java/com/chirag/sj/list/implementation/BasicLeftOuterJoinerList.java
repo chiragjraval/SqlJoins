@@ -1,4 +1,4 @@
-package com.chirag.sj.implementation;
+package com.chirag.sj.list.implementation;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -8,19 +8,29 @@ import java.util.List;
 
 import com.chirag.sj.exceptions.JoinMethodNotFoundException;
 import com.chirag.sj.exceptions.JoinMethodNotMatchingException;
-import com.chirag.sj.interfaces.Joiner;
-import com.chirag.sj.interfaces.Selector;
+import com.chirag.sj.list.interfaces.JoinerList;
+import com.chirag.sj.list.interfaces.Selector;
 import com.chirag.sj.util.JoinerUtil;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 
-public class BasicInnerJoiner implements Joiner
+public class BasicLeftOuterJoinerList implements JoinerList
 {
 	@Override
 	public <E, V, T> List<T> join(List<E> list1, List<V> list2, Selector<E, V, T> selector) throws JoinMethodNotFoundException, JoinMethodNotMatchingException, IllegalAccessException, IllegalArgumentException, InvocationTargetException
 	{
-		if(list1==null || list1.isEmpty() || list2==null || list2.isEmpty() || selector==null)
+		if(list1==null || list1.isEmpty() || selector==null)
 			throw new NullPointerException();
+		
+		List<T> result = new ArrayList<T>(list1.size());
+		
+		if(list2==null || list2.isEmpty())
+		{
+			for (E list1Obj : list1)
+				result.add(selector.select(list1Obj, null));
+			
+			return result;
+		}
 		
 		Class<?> class1 = JoinerUtil.getListGenericType(list1);
 		Class<?> class2 = JoinerUtil.getListGenericType(list2);
@@ -36,7 +46,6 @@ public class BasicInnerJoiner implements Joiner
 		if(!c1JoinMethod.getReturnType().equals(c2JoinMethod.getReturnType()))
 			throw new JoinMethodNotMatchingException(class1, class2);
 		
-		List<T> result = new ArrayList<T>(list1.size());
 		Multimap<Object, V> list2Map = HashMultimap.create();
 		
 		for (V list2Obj : list2) {
@@ -56,6 +65,4 @@ public class BasicInnerJoiner implements Joiner
 		
 		return result;
 	}
-	
-	
 }

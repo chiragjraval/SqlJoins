@@ -17,7 +17,7 @@ import com.chirag.sj.test.model.result.EmployeeDeptLoginDetail;
 import com.chirag.sj.test.model.result.EmployeeLoginDetail;
 import com.chirag.sj.test.selector.EmployeeDeptLoginDetailSelector;
 import com.chirag.sj.test.selector.EmployeeLoginDetailSelector;
-import com.chirag.sj.util.JoinerType;
+import com.chirag.sj.util.JoinType;
 import com.chirag.sj.util.JoinerUtil;
 
 public class BasicJoinerUtilTest
@@ -41,7 +41,7 @@ public class BasicJoinerUtilTest
 		List<EmployeeLoginDetail> expectedResult = new ArrayList<EmployeeLoginDetail>();
 		expectedResult.add(new EmployeeLoginDetail("ld01", "chirag", "dp01", "chirag", "chirag"));
 		
-		List<EmployeeLoginDetail> result = JoinerUtil.join(employees, loginDetails, JoinerType.INNER_JOIN, new EmployeeLoginDetailSelector());
+		List<EmployeeLoginDetail> result = JoinerUtil.join(employees, loginDetails, JoinType.INNER_JOIN, new EmployeeLoginDetailSelector(), EmployeeLoginDetail.class);
 		
 		Assert.assertTrue(expectedResult.equals(result));
 	}
@@ -62,7 +62,7 @@ public class BasicJoinerUtilTest
 		expectedResult.add(new EmployeeLoginDetail("ld01", "chirag", "dp01", "chirag", "chirag"));
 		expectedResult.add(new EmployeeLoginDetail("ld03", "ekta", "dp03", "ekta", "ekta"));
 		
-		List<EmployeeLoginDetail> result = JoinerUtil.join(employees, loginDetails, JoinerType.INNER_JOIN, new EmployeeLoginDetailSelector());
+		List<EmployeeLoginDetail> result = JoinerUtil.join(employees, loginDetails, JoinType.INNER_JOIN, new EmployeeLoginDetailSelector(), EmployeeLoginDetail.class);
 		
 		Assert.assertTrue(expectedResult.equals(result));
 	}
@@ -80,7 +80,7 @@ public class BasicJoinerUtilTest
 		List<EmployeeLoginDetail> expectedResult = new ArrayList<EmployeeLoginDetail>();
 		expectedResult.add(new EmployeeLoginDetail("ld01", "chirag", "dp01", "chirag", "chirag"));
 		
-		List<EmployeeLoginDetail> result = JoinerUtil.join(employees, loginDetails, JoinerType.LEFT_OUTER_JOIN, new EmployeeLoginDetailSelector());
+		List<EmployeeLoginDetail> result = JoinerUtil.join(employees, loginDetails, JoinType.LEFT_OUTER_JOIN, new EmployeeLoginDetailSelector(), EmployeeLoginDetail.class);
 		
 		Assert.assertTrue(expectedResult.equals(result));
 	}
@@ -99,7 +99,7 @@ public class BasicJoinerUtilTest
 		expectedResult.add(new EmployeeLoginDetail("ld01", "chirag", "dp01", "chirag", "chirag"));
 		expectedResult.add(new EmployeeLoginDetail("ld03", "ekta", "dp03", null, null));
 		
-		List<EmployeeLoginDetail> result = JoinerUtil.join(employees, loginDetails, JoinerType.LEFT_OUTER_JOIN, new EmployeeLoginDetailSelector());
+		List<EmployeeLoginDetail> result = JoinerUtil.join(employees, loginDetails, JoinType.LEFT_OUTER_JOIN, new EmployeeLoginDetailSelector(), EmployeeLoginDetail.class);
 		
 		Assert.assertTrue(expectedResult.equals(result));
 	}
@@ -115,7 +115,7 @@ public class BasicJoinerUtilTest
 		expectedResult.add(new EmployeeLoginDetail("ld01", "chirag", "dp01", null, null));
 		expectedResult.add(new EmployeeLoginDetail("ld03", "ekta", "dp03", null, null));
 		
-		List<EmployeeLoginDetail> result = JoinerUtil.join(employees, null, JoinerType.LEFT_OUTER_JOIN, new EmployeeLoginDetailSelector());
+		List<EmployeeLoginDetail> result = JoinerUtil.join(employees, null, JoinType.LEFT_OUTER_JOIN, new EmployeeLoginDetailSelector(), EmployeeLoginDetail.class);
 		
 		Assert.assertTrue(expectedResult.equals(result));
 	}
@@ -134,7 +134,7 @@ public class BasicJoinerUtilTest
 		expectedResult.add(new EmployeeLoginDetail("ld01", "chirag", "dp01", "chirag", "chirag"));
 		expectedResult.add(new EmployeeLoginDetail("ld01", "chirag", "dp01", "nikunj", "nikunj"));
 		
-		List<EmployeeLoginDetail> result = JoinerUtil.join(employees, loginDetails, JoinerType.LEFT_OUTER_JOIN, new EmployeeLoginDetailSelector());
+		List<EmployeeLoginDetail> result = JoinerUtil.join(employees, loginDetails, JoinType.LEFT_OUTER_JOIN, new EmployeeLoginDetailSelector(), EmployeeLoginDetail.class);
 		
 		Assert.assertTrue(expectedResult.equals(result));
 	}
@@ -153,7 +153,7 @@ public class BasicJoinerUtilTest
 		expectedResult.add(new EmployeeLoginDetail("ld01", "chirag", "dp01", "chirag", "chirag"));
 		expectedResult.add(new EmployeeLoginDetail("ld01", "chirag", "dp01", "nikunj", "nikunj"));
 		
-		List<EmployeeLoginDetail> result = JoinerUtil.join(employees, loginDetails, JoinerType.LEFT_OUTER_JOIN, new EmployeeLoginDetailSelector());
+		List<EmployeeLoginDetail> result = JoinerUtil.join(employees, loginDetails, JoinType.LEFT_OUTER_JOIN, new EmployeeLoginDetailSelector(), EmployeeLoginDetail.class);
 		
 		Assert.assertTrue(expectedResult.equals(result));
 	}
@@ -175,7 +175,7 @@ public class BasicJoinerUtilTest
 		expectedResult.add(new EmployeeLoginDetail("ld01", "chirag", "dp01", "chirag", "chirag"));
 		expectedResult.add(new EmployeeLoginDetail("ld01", "chirag", "dp01", "nikunj", "nikunj"));
 		
-		List<EmployeeLoginDetail> result = JoinerUtil.join(employees, loginDetails, JoinerType.LEFT_OUTER_JOIN, new EmployeeLoginDetailSelector());
+		List<EmployeeLoginDetail> result = JoinerUtil.join(employees, loginDetails, JoinType.LEFT_OUTER_JOIN, new EmployeeLoginDetailSelector(), EmployeeLoginDetail.class);
 		
 		Assert.assertTrue(expectedResult.equals(result));
 	}
@@ -201,8 +201,8 @@ public class BasicJoinerUtilTest
 		
 		List<EmployeeDeptLoginDetail> result =
 			JoinerUtil.join(
-				JoinerUtil.join(employees, loginDetails, JoinerType.INNER_JOIN, new EmployeeLoginDetailSelector()), 
-				departments, JoinerType.LEFT_OUTER_JOIN, new EmployeeDeptLoginDetailSelector()
+				JoinerUtil.join(employees, loginDetails, JoinType.INNER_JOIN, new EmployeeLoginDetailSelector(), EmployeeLoginDetail.class), 
+				departments, JoinType.LEFT_OUTER_JOIN, new EmployeeDeptLoginDetailSelector(), EmployeeDeptLoginDetail.class
 			);
 		
 		Assert.assertTrue(expectedResult.equals(result));

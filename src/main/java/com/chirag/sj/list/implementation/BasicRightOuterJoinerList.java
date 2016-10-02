@@ -1,4 +1,4 @@
-package com.chirag.sj.implementation;
+package com.chirag.sj.list.implementation;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -8,13 +8,13 @@ import java.util.List;
 
 import com.chirag.sj.exceptions.JoinMethodNotFoundException;
 import com.chirag.sj.exceptions.JoinMethodNotMatchingException;
-import com.chirag.sj.interfaces.Joiner;
-import com.chirag.sj.interfaces.Selector;
+import com.chirag.sj.list.interfaces.JoinerList;
+import com.chirag.sj.list.interfaces.Selector;
 import com.chirag.sj.util.JoinerUtil;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 
-public class BasicLeftOuterJoiner implements Joiner
+public class BasicRightOuterJoinerList implements JoinerList
 {
 	@Override
 	public <E, V, T> List<T> join(List<E> list1, List<V> list2, Selector<E, V, T> selector) throws JoinMethodNotFoundException, JoinMethodNotMatchingException, IllegalAccessException, IllegalArgumentException, InvocationTargetException
@@ -46,21 +46,21 @@ public class BasicLeftOuterJoiner implements Joiner
 		if(!c1JoinMethod.getReturnType().equals(c2JoinMethod.getReturnType()))
 			throw new JoinMethodNotMatchingException(class1, class2);
 		
-		Multimap<Object, V> list2Map = HashMultimap.create();
+		Multimap<Object, E> list1Map = HashMultimap.create();
 		
-		for (V list2Obj : list2) {
-			Object key = c2JoinMethod.invoke(list2Obj);
+		for (E list1Obj : list1) {
+			Object key = c1JoinMethod.invoke(list1Obj);
 			if(key != null){
-				list2Map.put(c2JoinMethod.invoke(list2Obj), list2Obj);
+				list1Map.put(c1JoinMethod.invoke(list1Obj), list1Obj);
 			}
 		}
 		
-		for (E list1Obj : list1)
+		for (V list2Obj : list2)
 		{
-			Object list1ObjKey = c1JoinMethod.invoke(list1Obj);
-			Collection<V> list2Obj = list2Map.get(list1ObjKey);
-			if(list2Obj == null || list2Obj.isEmpty()) result.add(selector.select(list1Obj, null));
-			else for(V v:list2Obj) result.add(selector.select(list1Obj, v));
+			Object list2ObjKey = c2JoinMethod.invoke(list2Obj);
+			Collection<E> list1Obj = list1Map.get(list2ObjKey);
+			if(list1Obj == null || list1Obj.isEmpty()) result.add(selector.select(null, list2Obj));
+			else for(E e:list1Obj) result.add(selector.select(e, list2Obj));
 		}
 		
 		return result;

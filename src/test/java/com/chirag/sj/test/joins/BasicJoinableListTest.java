@@ -9,8 +9,8 @@ import org.junit.Test;
 
 import com.chirag.sj.exceptions.JoinMethodNotFoundException;
 import com.chirag.sj.exceptions.JoinMethodNotMatchingException;
-import com.chirag.sj.implementation.BasicJoinableList;
-import com.chirag.sj.interfaces.JoinableList;
+import com.chirag.sj.list.implementation.BasicJoinableList;
+import com.chirag.sj.list.interfaces.JoinableList;
 import com.chirag.sj.test.model.Department;
 import com.chirag.sj.test.model.Employee;
 import com.chirag.sj.test.model.LoginDetail;
@@ -37,9 +37,8 @@ public class BasicJoinableListTest
 		JoinableList<Employee> joinableEmployees = new BasicJoinableList<>(employees);
 		JoinableList<LoginDetail> joinableLoginDetails = new BasicJoinableList<>(loginDetails);
 		JoinableList<EmployeeLoginDetail> joinableResult = joinableEmployees.innerJoin(joinableLoginDetails, new EmployeeLoginDetailSelector());
-		List<EmployeeLoginDetail> result = joinableResult.getData();
 		
-		Assert.assertTrue(expectedResult.equals(result));
+		Assert.assertTrue(expectedResult.equals(joinableResult));
 	}
 	
 	@Test
@@ -68,9 +67,8 @@ public class BasicJoinableListTest
 		JoinableList<EmployeeDeptLoginDetail> joinableResult =
 				joinableEmployees.innerJoin(joinableLoginDetails, new EmployeeLoginDetailSelector())
 				.leftOuterJoin(joinableDepartments, new EmployeeDeptLoginDetailSelector());
-		List<EmployeeDeptLoginDetail> result = joinableResult.getData();
 		
-		Assert.assertTrue(expectedResult.equals(result));
+		Assert.assertTrue(expectedResult.equals(joinableResult));
 	}
 	
 }

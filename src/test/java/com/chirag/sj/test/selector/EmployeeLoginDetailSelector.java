@@ -1,6 +1,6 @@
 package com.chirag.sj.test.selector;
 
-import com.chirag.sj.interfaces.Selector;
+import com.chirag.sj.list.interfaces.Selector;
 import com.chirag.sj.test.model.Employee;
 import com.chirag.sj.test.model.LoginDetail;
 import com.chirag.sj.test.model.result.EmployeeLoginDetail;

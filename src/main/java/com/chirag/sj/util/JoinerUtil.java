@@ -2,42 +2,44 @@ package com.chirag.sj.util;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.Collection;
 import java.util.List;
 
 import com.chirag.sj.annotations.JoinMethod;
 import com.chirag.sj.exceptions.JoinMethodNotFoundException;
 import com.chirag.sj.exceptions.JoinMethodNotMatchingException;
-import com.chirag.sj.implementation.BasicFullOuterJoiner;
-import com.chirag.sj.implementation.BasicInnerJoiner;
-import com.chirag.sj.implementation.BasicLeftOuterJoiner;
-import com.chirag.sj.implementation.BasicRightOuterJoiner;
-import com.chirag.sj.interfaces.Selector;
+import com.chirag.sj.list.implementation.BasicFullOuterJoinerList;
+import com.chirag.sj.list.implementation.BasicInnerJoinerList;
+import com.chirag.sj.list.implementation.BasicLeftOuterJoinerList;
+import com.chirag.sj.list.implementation.BasicRightOuterJoinerList;
+import com.chirag.sj.list.interfaces.Selector;
 
 public class JoinerUtil
 {
-	private static final BasicInnerJoiner innerJoiner = new BasicInnerJoiner();
-	private static final BasicLeftOuterJoiner leftOuterJoiner = new BasicLeftOuterJoiner();
-	private static final BasicRightOuterJoiner rightOuterJoiner = new BasicRightOuterJoiner();
-	private static final BasicFullOuterJoiner fullOuterJoiner = new BasicFullOuterJoiner();
+	private static final BasicInnerJoinerList innerJoiner = new BasicInnerJoinerList();
+	private static final BasicLeftOuterJoinerList leftOuterJoiner = new BasicLeftOuterJoinerList();
+	private static final BasicRightOuterJoinerList rightOuterJoiner = new BasicRightOuterJoinerList();
+	private static final BasicFullOuterJoinerList fullOuterJoiner = new BasicFullOuterJoinerList();
 	
-	public static <E, V, T> List<T> join(List<E> list1, List<V> list2, JoinerType joinerType, Selector<E, V, T> selector) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, JoinMethodNotFoundException, JoinMethodNotMatchingException
+	public static <E, V, T> List<T> join(List<E> list1, List<V> list2, JoinType joinType, Selector<E, V, T> selector, Class<T> targetClass) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, JoinMethodNotFoundException, JoinMethodNotMatchingException
 	{
-		if(JoinerType.INNER_JOIN.equals(joinerType))
+		if(JoinType.INNER_JOIN.equals(joinType))
 			return innerJoiner.join(list1, list2, selector);
-		else if(JoinerType.LEFT_OUTER_JOIN.equals(joinerType))
+		else if(JoinType.LEFT_OUTER_JOIN.equals(joinType))
 			return leftOuterJoiner.join(list1, list2, selector);
-		else if(JoinerType.RIGHT_OUTER_JOIN.equals(joinerType))
+		else if(JoinType.RIGHT_OUTER_JOIN.equals(joinType))
 			return rightOuterJoiner.join(list1, list2, selector);
-		else if(JoinerType.FULL_OUTER_JOIN.equals(joinerType))
+		else if(JoinType.FULL_OUTER_JOIN.equals(joinType))
 			return fullOuterJoiner.join(list1, list2, selector);
 		else
 			return null;
 	}
 	
-	public static Class<?> getListGenericType(List<?> list)
+	@SuppressWarnings("unchecked")
+	public static <E> Class<E> getListGenericType(Collection<E> data)
 	{
-		if(list!=null && !list.isEmpty())
-			return list.iterator().next().getClass();
+		if(data!=null && !data.isEmpty())
+			return (Class<E>)data.iterator().next().getClass();
 		else
 			return null;
 	}
